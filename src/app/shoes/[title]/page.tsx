@@ -4,6 +4,7 @@ import RanShoes from '@/components/RanShoes';
 import {CheckCheck} from 'lucide-react';
 import Image from 'next/image';
 import React,{useState} from 'react'
+import {useCart} from 'react-use-cart';
 
 interface ShoeDetailsProps {
     params: {
@@ -16,6 +17,8 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
 
     const [selectedSize,setSelectedSize] = useState()
     const [selectedImage,setSelectedImage] = useState(selectedShoe?.image)
+
+    const {addItem,removeItem,inCart} = useCart()
 
     return (
         <section className='my-16 lg:w-10/12 mx-auto'>
@@ -37,7 +40,13 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
                         ))}
                     </div>
                     <p className='text-neutral-700'>{selectedShoe?.longDesc}</p>
-                    <button className='py-2 hover:opacity-80 bg-accent w-full flex justify-center rounded-md'>Add to cart</button>
+                    {inCart(selectedShoe.id) ? <button onClick={() => removeItem(selectedShoe.id)} className='bg-accent text-white cursor-pointer hover:opacity-80 font-bold py-1.5 w-full rounded-md'>
+                        remove from cart
+                    </button> :
+                        <button onClick={() => addItem(selectedShoe)} className='bg-accent text-white cursor-pointer hover:opacity-80 font-bold py-1.5 w-full rounded-md'>
+                            Add to cart
+                        </button>
+                    }
                     <div className='mt-2 flex items-center '>
                         <CheckCheck className='text-accent w-5 h-5 mx-3' />
                         <small className='text-sm text-neutral-600'>
