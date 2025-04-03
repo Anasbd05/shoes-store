@@ -14,7 +14,9 @@ const Navbar = () => {
                 <Search className='mx-2' />
                 <input type="text" className='outline-none w-full px-1 border-none' />
             </div>
-            <ShoppingCart />
+            <Link href={"/shoppingcart"}>
+                <ShoppingCart />
+            </Link>
         </nav>
     )
 }

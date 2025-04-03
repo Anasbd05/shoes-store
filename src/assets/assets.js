@@ -27,6 +27,7 @@ import thumb_s2_3 from "./thumb-13.jpg"
 import thumb_s3_1 from "./thumb-21.jpg"
 import thumb_s3_2 from "./thumb-22.jpg"
 import thumb_s3_3 from "./thumb-23.jpg"
+import { CheckCheck, CheckCircle, Truck } from "lucide-react"
 
 
 
@@ -197,3 +198,56 @@ export const shoes = [
         sizes: [40, 41, 42, 43, 44, 45]
     }
 ];
+
+
+export const BestSeller = [
+    {
+        id: 1,
+        title: "Classic Runner",
+        description: "Classic running shoe with durable sole.",
+        price: 330,
+        image: shoe7,
+    },
+    {
+        id: 3,
+        title: "Flex Comfort",
+        price: 300,
+        image: shoe15,
+    },
+    {
+        id: 2,
+        title: "Grip Master",
+        description: "All-terrain running shoe with superior grip.",
+        price: 320,
+        image: shoe16,
+    },
+    {
+        id: 4,
+        title: "Ultra Glide",
+        description: "Ultra-lightweight sneaker with maximum comfort.",
+        price: 440,
+        image: shoe_s3,        
+    },    
+    {
+        id: 5,
+        title: "Trail Master",
+        description: "High-quality running shoe with enhanced grip and comfort.",
+        price: 300,
+        image: shoe1,
+    }
+]
+
+export const provides = [
+    {
+        title :  "High-quality and stylish shoes",
+        icon : <CheckCheck  className="w-14 h-14 font-bold"/>
+    } ,
+    {
+        title :  "Free Shipping",
+        icon : <Truck className="w-14 h-14 font-bold" />
+    } ,
+    {
+        title :  "7 Days Return Policy",
+        icon : <CheckCircle className="w-14 h-14 font-bold"/>
+    } ,
+]
