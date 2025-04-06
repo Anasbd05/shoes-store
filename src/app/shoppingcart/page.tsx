@@ -8,7 +8,6 @@ import {useCart} from 'react-use-cart'
 const Shopping = () => {
 
     const {items,cartTotal,removeItem,updateItemQuantity,isEmpty} = useCart();
-
     const Total = cartTotal - 20
 
     return (
@@ -26,7 +25,7 @@ const Shopping = () => {
                                 <div className="flex flex-col">
                                     <h1 className='font-bold'>{shoe.title}</h1>
                                     <div className="flex mt-1 flex-col">
-                                        <p>Size :{shoe.sizes[0]}</p>
+                                        <p>Size :{shoe.size}</p>
                                         <small className='font-mono text-base font-semibold text-accent'>{shoe.price}DH</small>
                                     </div>
                                 </div>

@@ -4,10 +4,11 @@ import Navbar from "@/components/Navbar";
 import {Outfit} from "next/font/google";
 import Footer from "@/components/home/Footer";
 import CartContextProvider from "@/context/CartContextProvider";
+import {ToastContainer} from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Airtalee Shoes ",
-  description: "A website about E-commerce",
+  description: "A website about Selling shoes",
 };
 
 const outfit = Outfit({
@@ -25,6 +26,8 @@ export default function RootLayout({
         <CartContextProvider>
           <Navbar />
           {children}
+
+          <ToastContainer />
           <Footer />
         </CartContextProvider>
       </body>

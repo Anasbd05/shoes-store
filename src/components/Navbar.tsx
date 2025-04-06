@@ -15,16 +15,16 @@ const Navbar = () => {
                     <span className='text-accent'>Air</span>talee
                 </h1>
             </Link>
-            <div className='hidden sm:flex rounded-xl  w-4/6 py-1 border-2'>
+            <div className='hidden sm:flex rounded-xl  w-4/6 py-1 border-2 border-accent'>
                 <Search className='mx-2' />
                 <input type="text" className='outline-none w-full px-1 border-none' />
             </div>
+            <Link href={"/admin"} className='ring ring-neutral-300 bg-gray-100 py-1 px-4 rounded-xl'>Admin</Link>
             <Link href={"/shoppingcart"}>
                 {items.length > 0 ? <small className='absolute h-4 top-4 right-5 w-4 flex items-center justify-center rounded-full text-white  bg-accent'>
                     {items.length}
                 </small> : ""
                 }
-
                 <ShoppingCart className='relative' />
             </Link>
         </nav>

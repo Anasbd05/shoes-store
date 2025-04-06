@@ -5,7 +5,7 @@ import Provides from "@/components/home/Provides";
 
 export default function Home() {
   return (
-    <div className="my-14 ">
+    <div className="my-14">
       <Hero />
       <DisplayBest />
       <Map />
