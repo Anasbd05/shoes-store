@@ -67,16 +67,15 @@ const AddPage = () => {
             setDescription('')
             setPrice("")
             setImageUrls([])
-            setSizes([])
         }
     }
 
     return (
         <section className='w-full h-screen flex gap-5'>
             <Sidebar />
-            <div className="w-full lg:w-5/6 lg:ml-auto p-5">
+            <div className="w-full lg:w-4/5 lg:ml-auto p-5">
                 <h1 className='text-3xl font-header font-bold'>Add Products</h1>
-                <main className='flex gap-4 flex-col w-full lg:w-3/5 my-8'>
+                <main className='flex gap-4 flex-col w-full lg:w-4/5 my-8'>
                     {/* Upload Images */}
                     <div className="flex flex-col">
                         <label className="text-gray-700">Upload Image</label>

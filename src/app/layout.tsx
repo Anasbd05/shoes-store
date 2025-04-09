@@ -1,8 +1,6 @@
 import type {Metadata} from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import {Outfit} from "next/font/google";
-import Footer from "@/components/home/Footer";
 import CartContextProvider from "@/context/CartContextProvider";
 import {ToastContainer} from "react-toastify";
 
@@ -24,11 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body cz-shortcut-listen="true" className={`antialiased ${outfit.className}`}>
         <CartContextProvider>
-          <Navbar />
           {children}
-
           <ToastContainer />
-          <Footer />
         </CartContextProvider>
       </body>
     </html>
