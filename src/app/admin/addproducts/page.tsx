@@ -26,6 +26,7 @@ const AddPage = () => {
             console.error('Upload Error:',error)
             toast.error("There is an image has been already uploaded" + error.message)
         } else {
+            console.log(data)
             const {data: urlData} = supabase.storage
                 .from('shoeimages')
                 .getPublicUrl(filePath)
@@ -36,12 +37,46 @@ const AddPage = () => {
         }
     }
 
+    const [Title,setTitle] = useState('')
+    const [description,setDescription] = useState('')
+    const [price,setPrice] = useState()
+    const [sizes,setSizes] = useState([38,39,40,41,42,43,44])
+
+    const AddShoes = async () => {
+        try {
+            const {error} = await supabase
+                .from('addshoes')
+                .insert({
+                    title: Title,
+                    description: description,
+                    price: price,
+                    sizes: sizes,
+                    images: imageUrls
+                })
+            if(error) {
+                toast.error(error.message)
+                console.log(error)
+            } else {
+                toast.success("Shoe add to the store")
+            }
+        } catch(error) {
+            console.log(error)
+        }
+        finally {
+            setTitle('')
+            setDescription('')
+            setPrice("")
+            setImageUrls([])
+            setSizes([])
+        }
+    }
+
     return (
         <section className='w-full h-screen flex gap-5'>
             <Sidebar />
-            <div className="w-5/6 ml-auto p-5">
+            <div className="w-full lg:w-5/6 lg:ml-auto p-5">
                 <h1 className='text-3xl font-header font-bold'>Add Products</h1>
-                <main className='flex gap-4 flex-col w-3/5 my-8'>
+                <main className='flex gap-4 flex-col w-full lg:w-3/5 my-8'>
                     {/* Upload Images */}
                     <div className="flex flex-col">
                         <label className="text-gray-700">Upload Image</label>
@@ -72,6 +107,9 @@ const AddPage = () => {
                     <div className="flex flex-col">
                         <label className='text-gray-700'>Shoe name</label>
                         <input
+
+                            value={Title}
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder='Type Here!'
                             className='py-1.5 px-3 border border-gray-400 rounded-sm'
                             type="text"
@@ -82,6 +120,8 @@ const AddPage = () => {
                     <div className="flex flex-col">
                         <label className='text-gray-700'>Shoe description</label>
                         <input
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             placeholder='Type Here!'
                             className='py-1.5 px-3 border border-gray-400 rounded-sm'
                             type="text"
@@ -92,6 +132,8 @@ const AddPage = () => {
                     <div className="flex flex-col w-1/4">
                         <label className='text-gray-700'>Shoe Price</label>
                         <input
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
                             placeholder='Type Here!'
                             className='py-1.5 px-3 border border-gray-400 rounded-sm'
                             type="number"
@@ -102,7 +144,7 @@ const AddPage = () => {
                     <div className="flex-col flex mt-3">
                         <label className='text-gray-700'>Shoe sizes</label>
                         <div className="flex gap-2">
-                            {[38,39,40,41,42,43,44].map(size => (
+                            {sizes.map(size => (
                                 <button key={size} className='bg-black h-10 w-10 text-white'>
                                     {size}
                                 </button>
@@ -111,7 +153,7 @@ const AddPage = () => {
                     </div>
 
                     {/* Submit Button */}
-                    <button className='bg-accent text-white py-2 w-32 rounded-sm'>
+                    <button onClick={AddShoes} className='bg-accent text-white py-2 w-32 rounded-sm'>
                         Add Now
                     </button>
                 </main>
