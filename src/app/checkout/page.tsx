@@ -115,7 +115,7 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* Caisse */}
-                    <main className='lg:w-1/4 w-2/4 ml-auto h-60 rounded-md p-4 border-2 border-black'>
+                    <main className='lg:w-1/4 w-3/4 ml-auto h-60 rounded-md p-4 border-2 border-black'>
                         <div className="flex gap-2 mb-4 items-center">
                             <BaggageClaim />
                             <h1 className='text-2xl font-bold font-header'>Caisse</h1>

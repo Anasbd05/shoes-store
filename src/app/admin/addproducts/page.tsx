@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import Sidebar from '@/components/Sidebar'
+import {Button} from '@/components/ui/button'
+import {Input} from '@/components/ui/input'
+import {Label} from '@/components/ui/label'
 import {supabase} from '@/utils/supabase'
 import Image from 'next/image'
 import React,{useState} from 'react'
@@ -41,6 +45,7 @@ const AddPage = () => {
     const [description,setDescription] = useState('')
     const [price,setPrice] = useState()
     const [sizes,setSizes] = useState([38,39,40,41,42,43,44])
+    const [selectedSizes,setSelectedSizes] = useState([])
 
     const AddShoes = async () => {
         try {
@@ -50,7 +55,7 @@ const AddPage = () => {
                     title: Title,
                     description: description,
                     price: price,
-                    sizes: sizes,
+                    sizes: selectedSizes,
                     images: imageUrls
                 })
             if(error) {
@@ -70,19 +75,21 @@ const AddPage = () => {
         }
     }
 
+    console.log(selectedSizes)
+
     return (
-        <section className='w-full h-screen flex gap-5'>
+        <section className='w-full h-screen flex flex-row-reverse lg:flex-row gap-5'>
             <Sidebar />
-            <div className="w-full lg:w-4/5 lg:ml-auto p-5">
+            <div className="w-full lg:w-4/5 mt-8 lg:mt-0 lg:ml-auto p-5">
                 <h1 className='text-3xl font-header font-bold'>Add Products</h1>
                 <main className='flex gap-4 flex-col w-full lg:w-4/5 my-8'>
                     {/* Upload Images */}
                     <div className="flex flex-col">
-                        <label className="text-gray-700">Upload Image</label>
+                        <Label className='mb-1' >Upload Image</Label>
                         <div className="flex gap-2">
                             {[0,1,2,3].map((i) => (
                                 <div key={i}>
-                                    <label htmlFor={`img${i}`}>
+                                    <Label htmlFor={`img${i}`}>
                                         <Image
                                             src={imageUrls[i] || "/upload.png"}
                                             width={100}
@@ -90,8 +97,8 @@ const AddPage = () => {
                                             alt="Upload preview"
                                             className="cursor-pointer object-cover border rounded"
                                         />
-                                    </label>
-                                    <input
+                                    </Label>
+                                    <Input
                                         onChange={(e) => handleUpload(e,i)}
                                         type="file"
                                         id={`img${i}`}
@@ -104,57 +111,52 @@ const AddPage = () => {
 
                     {/* Shoe Name */}
                     <div className="flex flex-col">
-                        <label className='text-gray-700'>Shoe name</label>
-                        <input
+                        <Label className='mb-1' >Shoe name</Label>
+                        <Input
 
                             value={Title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder='Type Here!'
-                            className='py-1.5 px-3 border border-gray-400 rounded-sm'
                             type="text"
                         />
                     </div>
 
                     {/* Shoe Description */}
                     <div className="flex flex-col">
-                        <label className='text-gray-700'>Shoe description</label>
-                        <input
+                        <Label className='mb-1' >Shoe description</Label>
+                        <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder='Type Here!'
-                            className='py-1.5 px-3 border border-gray-400 rounded-sm'
-                            type="text"
+                            className='h-40 py-1 ring px-3 ring-gray-100 shadow-sm rounded-md'
                         />
+                        <small className='text-red-500 text-xs place-self-end'>Max 200 letter </small>
                     </div>
 
                     {/* Shoe Price */}
                     <div className="flex flex-col w-1/4">
-                        <label className='text-gray-700'>Shoe Price</label>
-                        <input
+                        <Label className='mb-1' >Shoe Price</Label>
+                        <Input
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            placeholder='Type Here!'
-                            className='py-1.5 px-3 border border-gray-400 rounded-sm'
                             type="number"
                         />
                     </div>
 
                     {/* Shoe Sizes */}
                     <div className="flex-col flex mt-3">
-                        <label className='text-gray-700'>Shoe sizes</label>
-                        <div className="flex gap-2">
+                        <Label className='mb-1' >Shoe sizes</Label>
+                        <div className="flex flex-wrap gap-2">
                             {sizes.map(size => (
-                                <button key={size} className='bg-black h-10 w-10 text-white'>
+                                <Button onClick={() => setSelectedSizes(size)} key={size}  >
                                     {size}
-                                </button>
+                                </Button>
                             ))}
                         </div>
                     </div>
 
                     {/* Submit Button */}
-                    <button onClick={AddShoes} className='bg-accent text-white py-2 w-32 rounded-sm'>
+                    <Button className='mb-4' onClick={AddShoes}>
                         Add Now
-                    </button>
+                    </Button>
                 </main>
             </div>
         </section>

@@ -10,10 +10,6 @@ const ShoesPage = () => {
     const [shoeSearch,setShoeSearch] = useState("")
     const [sortPrice,setSortPrice] = useState([...shoes])
 
-    useEffect(() => {
-        setSortPrice([...shoes].sort((a,b) => a.price - b.price))
-    },[])
-
     const sortShoeByPrice = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value
         const sorted = [...shoes].sort((a,b) =>
