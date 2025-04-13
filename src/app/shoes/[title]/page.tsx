@@ -87,7 +87,7 @@ const ShoeDetails = ({params}: {params: Promise<{title: string}>}) => {
                         {selectedSize && inCart(itemIdWithSize) ? (
                             <button
                                 onClick={() => removeItem(itemIdWithSize)}
-                                className='bg-red-600 text-white cursor-pointer hover:opacity-80 font-bold py-1.5 w-full rounded-md'
+                                className='bg-red-500 text-white cursor-pointer hover:opacity-80 font-bold py-1.5 w-full rounded-md'
                             >
                                 Remove from cart
                             </button>

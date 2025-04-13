@@ -26,7 +26,7 @@ const ShoesPage = () => {
                     <h1 className='text-3xl font-bold font-header'>Explore our shoes</h1>
                     <div className="flex items-center gap-1">
                         <p>Price :</p>
-                        <select className='bg-gray-900 text-white py-1 px-4 outline-none rounded-sm'
+                        <select className='bg-black text-white py-1 px-4 outline-none rounded-sm'
                             onChange={sortShoeByPrice}>
                             <option value="low">Low To High</option>
                             <option value="high">High To Low</option>
