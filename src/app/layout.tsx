@@ -5,7 +5,7 @@ import CartContextProvider from "@/context/CartContextProvider";
 import {ToastContainer} from "react-toastify";
 
 export const metadata: Metadata = {
-  title: "Airtalee Shoes ",
+  title: "Airtalee Shoes",
   description: "A website about Selling shoes",
 };
 
