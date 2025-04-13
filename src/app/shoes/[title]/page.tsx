@@ -1,4 +1,5 @@
 'use client'
+
 import {shoes} from '@/assets/assets'
 import Footer from '@/components/home/Footer'
 import Navbar from '@/components/Navbar'
@@ -9,14 +10,9 @@ import React,{useState} from 'react'
 import {toast} from 'react-toastify'
 import {useCart} from 'react-use-cart'
 
-interface ShoeDetailsProps {
-    params: {
-        title: string
-    }
-}
-
-const ShoeDetails = ({params}: ShoeDetailsProps) => {
+const ShoeDetails = ({params}: {params: Promise<{title: string}>}) => {
     const {title} = React.use(params)
+
     const selectedShoe = shoes.find(
         (shoe) => shoe.title.replaceAll(' ','') === title
     )
@@ -25,53 +21,59 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
     const [selectedImage,setSelectedImage] = useState(selectedShoe?.image)
 
     const {addItem,removeItem,inCart} = useCart()
-
     const itemIdWithSize = `${selectedShoe?.id}-${selectedSize}`
+
+    if(!selectedShoe) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <p className="text-xl text-gray-500">Shoe not found</p>
+            </div>
+        )
+    }
 
     return (
         <>
             <Navbar />
             <section className='my-16 lg:w-10/12 mx-auto'>
                 <main className='flex md:flex-row px-4 flex-col gap-4'>
-                    <div className='flex flex-col-reverse lg:flex-row md:w-5/6 gap-5'>
-                        <div
-                            className={`${selectedShoe?.thumbs?.length > 0
-                                ? 'flex lg:flex-col flex-row w-full lg:w-1/5 h-full justify-around lg:justify-between py-1 bg-gray-100 lg:py-4 '
-                                : ''
-                                }`}
-                        >
-                            {selectedShoe?.thumbs?.slice(0,3).map((thumb) => (
-                                <Image
-                                    src={thumb.thumbPic}
-                                    key={thumb.id}
-                                    onClick={() => setSelectedImage(thumb.thumbPic)}
-                                    className='w-32 h-24 cursor-pointer'
-                                    alt=''
-                                />
-                            ))}
+                    {selectedShoe && (
+                        <div className='flex flex-col-reverse lg:flex-row md:w-5/6 gap-5'>
+                            {selectedShoe?.thumbs?.length > 0 && (
+                                <div className='flex lg:flex-col flex-row w-full lg:w-1/5 h-full justify-around lg:justify-between py-1 bg-gray-100 lg:py-4'>
+                                    {selectedShoe?.thumbs.slice(0,3).map((thumb) => (
+                                        <Image
+                                            src={thumb.thumbPic}
+                                            key={thumb.id}
+                                            onClick={() => setSelectedImage(thumb.thumbPic)}
+                                            className='w-32 h-24 cursor-pointer object-cover border rounded'
+                                            alt='Thumbnail'
+                                            width={100}
+                                            height={100}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                            <Image
+                                width={550}
+                                height={600}
+                                className='w-full md:h-96 object-cover rounded-md'
+                                src={selectedImage || selectedShoe.image}
+                                alt='Shoe'
+                            />
                         </div>
-                        <Image
-                            width={550}
-                            height={600}
-                            className='w-full md:h-96 object-cover'
-                            src={selectedImage}
-                            alt=''
-                        />
-                    </div>
+                    )}
+
+
                     <div className='flex flex-col md:w-3/6 gap-4'>
-                        <h2 className='text-xl font-header font-bold'>
-                            {selectedShoe?.title}
-                        </h2>
-                        <p className='font-bold text-accent text-xl font-mono'>
-                            {selectedShoe?.price} DH
-                        </p>
+                        <h2 className='text-xl font-header font-bold'>{selectedShoe.title}</h2>
+                        <p className='font-bold text-accent text-xl font-mono'>{selectedShoe.price} DH</p>
+
+                        {/* Sizes */}
                         <div className='flex gap-2'>
-                            {selectedShoe?.sizes.map((size) => (
+                            {selectedShoe.sizes.map((size) => (
                                 <button
                                     onClick={() => setSelectedSize(size)}
-                                    className={`border rounded-md py-1 px-4 ${selectedSize === size
-                                        ? 'bg-black text-white'
-                                        : ''
+                                    className={`border rounded-md py-1 px-4 ${selectedSize === size ? 'bg-black text-white' : ''
                                         }`}
                                     key={size}
                                 >
@@ -79,9 +81,8 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
                                 </button>
                             ))}
                         </div>
-                        <p className='text-neutral-700'>
-                            {selectedShoe?.longDesc}
-                        </p>
+
+                        <p className='text-neutral-700'>{selectedShoe.longDesc}</p>
 
                         {selectedSize && inCart(itemIdWithSize) ? (
                             <button
@@ -93,8 +94,9 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
                         ) : (
                             <button
                                 onClick={() => {
-                                    if(!selectedSize)
-                                        return toast.error("Please select a size")
+                                    if(!selectedSize) {
+                                        return toast.error('Please select a size')
+                                    }
                                     addItem({
                                         ...selectedShoe,
                                         size: selectedSize,
@@ -107,11 +109,9 @@ const ShoeDetails = ({params}: ShoeDetailsProps) => {
                             </button>
                         )}
 
-                        <div className='mt-2 flex items-center '>
+                        <div className='mt-2 flex items-center'>
                             <CheckCheck className='text-accent w-5 h-5 mx-3' />
-                            <small className='text-sm text-neutral-600'>
-                                Free shipping
-                            </small>
+                            <small className='text-sm text-neutral-600'>Free shipping</small>
                         </div>
                     </div>
                 </main>

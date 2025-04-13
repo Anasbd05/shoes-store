@@ -25,25 +25,37 @@ import {
 import {toast} from 'react-toastify'
 import {supabase} from '@/utils/supabase'
 
+interface Shoe {
+    title: string
+    quantity: number
+    size: string
+}
+
+interface Order {
+    id: number
+    user: string
+    order: Shoe[]
+    number: number
+    city: string
+    address: string
+    total: number
+}
+
 const AdminPage = () => {
-    const [Orders,setOrders] = useState([])
-    const [loading,setLoading] = useState(false)
+    const [Orders,setOrders] = useState<Order[]>([])
 
     const FetchOrders = async () => {
-        setLoading(true)
         try {
             const {data,error} = await supabase
                 .from('shoes')
                 .select("*")
             if(data) {
-                setOrders(data)
+                setOrders(data as Order[])
             } else {
                 toast.error(error.message)
             }
         } catch(error) {
             console.log(error)
-        } finally {
-            setLoading(false)
         }
     }
 
