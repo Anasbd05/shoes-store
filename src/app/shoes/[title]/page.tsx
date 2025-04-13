@@ -23,6 +23,8 @@ const ShoeDetails = ({params}: {params: Promise<{title: string}>}) => {
     const {addItem,removeItem,inCart} = useCart()
     const itemIdWithSize = `${selectedShoe?.id}-${selectedSize}`
 
+    const thumbs = selectedShoe?.thumbs
+
     if(!selectedShoe) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -38,21 +40,19 @@ const ShoeDetails = ({params}: {params: Promise<{title: string}>}) => {
                 <main className='flex md:flex-row px-4 flex-col gap-4'>
                     {selectedShoe && (
                         <div className='flex flex-col-reverse lg:flex-row md:w-5/6 gap-5'>
-                            {selectedShoe?.thumbs?.length > 0 && (
-                                <div className='flex lg:flex-col flex-row w-full lg:w-1/5 h-full justify-around lg:justify-between py-1 bg-gray-100 lg:py-4'>
-                                    {selectedShoe?.thumbs.slice(0,3).map((thumb) => (
-                                        <Image
-                                            src={thumb.thumbPic}
-                                            key={thumb.id}
-                                            onClick={() => setSelectedImage(thumb.thumbPic)}
-                                            className='w-32 h-24 cursor-pointer object-cover border rounded'
-                                            alt='Thumbnail'
-                                            width={100}
-                                            height={100}
-                                        />
-                                    ))}
-                                </div>
-                            )}
+                            <div className={` ${thumbs ? "flex lg:flex-col flex-row w-full lg:w-1/5 h-full justify-around lg:justify-between py-1 bg-gray-100 lg:py-4" : "hidden"} `}>
+                                {selectedShoe?.thumbs?.map((thumb) => (
+                                    <Image
+                                        key={thumb.id}
+                                        src={thumb.thumbPic}
+                                        onClick={() => setSelectedImage(thumb.thumbPic)}
+                                        className={`${thumb.thumbPic ? "w-24 md:w-32 h-24 cursor-pointer object-cover flex  border rounded" : "hidden"} `}
+                                        alt='Thumbnail'
+                                        width={100}
+                                        height={100}
+                                    />
+                                ))}
+                            </div>
                             <Image
                                 width={550}
                                 height={600}
@@ -69,7 +69,7 @@ const ShoeDetails = ({params}: {params: Promise<{title: string}>}) => {
                         <p className='font-bold text-accent text-xl font-mono'>{selectedShoe.price} DH</p>
 
                         {/* Sizes */}
-                        <div className='flex gap-2'>
+                        <div className='flex flex-wrap gap-2'>
                             {selectedShoe.sizes.map((size) => (
                                 <button
                                     onClick={() => setSelectedSize(size)}
